@@ -1,5 +1,6 @@
 ## GROUP HEALTH: % of sessions w/ more and less than 5 members (past 12wks)
-## This query finds the % of sessions where the total # of members was either >= 5 OR < 5 that session. It sums all percentages, per session, per week, being a dynamic query (past values don't change)
+## This query finds the % of sessions where the total # of members was either >= 5 OR < 5 that session. It sums all percentages,
+   per session, per week, being a dynamic query (past values don't change)
 
 WITH AttendancePerSession as (
 
