@@ -28,7 +28,7 @@ select
     join GroupMembers gm on gm.id = a.memberId
 
     where 
-        a.attended IS NOT NULL and -- added because of RSVP changes (auto session id creation) 
+        a.attended IS NOT NULL and
         s.start <= NOW() and 
         g.startDate IS NOT NULL and  
         g.isInternal is not true and 
