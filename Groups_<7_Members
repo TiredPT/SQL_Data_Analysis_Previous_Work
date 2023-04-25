@@ -9,9 +9,9 @@ with ActiveGroups as (
            g.isPopUp as isPopUp,
            count(distinct(gm.id)) as numMembers
 
-    from paceprod.Groups g
-        join paceprod.GroupTypes gt on g.groupTypeId = gt.id
-        join paceprod.GroupMembers gm on g.id = gm.groupId and
+    from grps g
+        join grty gt on g.groupTypeId = gt.id
+        join grme gm on g.id = gm.groupId and
             (
                 gm.startDate is not null and
                 gm.startDate < NOW()
@@ -20,7 +20,7 @@ with ActiveGroups as (
                 gm.endDate is null or
                 gm.endDate > NOW()
             ) and
-            gm.isFacilitator is not true
+            gm.fac is not true
     where
         (
             g.startDate is not null and
