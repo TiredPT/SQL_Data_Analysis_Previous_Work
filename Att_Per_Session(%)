@@ -2,7 +2,7 @@
 
 ## Finds the attendance rate per session (percentage)
 
-WITH AttendancePerSession as ( -- want to find att per nthGroupSession (easier to pull L1, etc)
+WITH AttendancePerSession as ( 
     
     select 
         s.groupId as groupId,
@@ -12,7 +12,7 @@ WITH AttendancePerSession as ( -- want to find att per nthGroupSession (easier t
              ELSE "L13+"
              END as tenure,
 
-        CONCAT('https://pace.group/admin/group/',g.id) as groupLink,
+        CONCAT('proprietary link',g.id) as groupLink,
         g.name as groupName,
         SUM(if(a.sessionJoinedAt >= s.date - INTERVAL 7 DAY, 1, 0)) as sessionAttendance, -- it only includes members
         COUNT(DISTINCT a.id) as possibleAttendance,
@@ -22,10 +22,10 @@ WITH AttendancePerSession as ( -- want to find att per nthGroupSession (easier t
         ROW_NUMBER() OVER(PARTITION BY g.id ORDER BY s.date ASC) AS nthGroupSession,
         DATE_SUB(DATE(s.date), INTERVAL DAYOFWEEK(s.date)-1 DAY) as weekCohort
 
-    from paceprod.Sessions s
-    join paceprod.Groups g on g.id = s.groupId 
-    join paceprod.Attendances a on a.sessionId = s.id
-    join GroupMembers gm on gm.id = a.memberId
+    from sess s
+    join grps g on g.id = s.groupId 
+    join atts a on a.sessionId = s.id
+    join grme gm on gm.id = a.memberId
 
     where 
         a.attended IS NOT NULL and -- added because of RSVP changes (auto session id creation) 
@@ -44,7 +44,7 @@ WITH AttendancePerSession as ( -- want to find att per nthGroupSession (easier t
         g.id != '22531d56-d5f7-4a27-8fae-cf79e07941b7' and 
 
         -- we just want members
-        gm.isFacilitator IS NOT TRUE 
+        gm.fac IS NOT TRUE 
 
     group by   
         s.id 
