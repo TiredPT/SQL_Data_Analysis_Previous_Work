@@ -1,3 +1,5 @@
+-- This query finds the total number of active groups in the last 7 days
+
 with ActiveGroups as (
     select g.id as groupId,
            g.name as name,
