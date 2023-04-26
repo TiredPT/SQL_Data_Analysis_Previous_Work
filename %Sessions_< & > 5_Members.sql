@@ -1,3 +1,6 @@
+-- This query finds the % of sessions where the total # of members was either >= 5 OR < 5 that session.
+-- It sums all percentages, per session, per week, being a dynamic query (past values don't change)
+
 WITH AttendancePerSession as (
 
 select 
